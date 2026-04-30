@@ -103,7 +103,7 @@ The adapter sees a clean parsed event and produces an `InternalEvent` that Optim
 
 ## Adapter deployment: in-process modules
 
-Lender adapters are **modules in the main Optimus app** — not separate microservices. For MVP, this is the simpler choice:
+Lender adapters are **modules in the main Optimus app** — not separate microservices. The concrete realization is an `Optimus.Infrastructure/Lenders/{LenderName}/` module per lender within the layered .NET solution; see [tech-stack/application-architecture.md](../tech-stack/application-architecture.md). For MVP, this is the simpler choice:
 
 - One deployment surface, one set of secrets, one observability stack.
 - Low ops overhead.
@@ -173,4 +173,4 @@ The MVP single-prime + fallback gives us exactly two lenders — the minimum via
 
 ## Cross-References
 
-See also: [lender-integration-model.md](../lender-integration-model.md), [lender-routing.md](../lender-routing.md), [credit-pulls.md](../credit-pulls.md), [loan-documents-and-signing.md](../loan-documents-and-signing.md), [project-completion-and-funding.md](../project-completion-and-funding.md), [compliance.md](../compliance.md).
+See also: [lender-integration-model.md](../lender-integration-model.md), [lender-routing.md](../lender-routing.md), [credit-pulls.md](../credit-pulls.md), [loan-documents-and-signing.md](../loan-documents-and-signing.md), [project-completion-and-funding.md](../project-completion-and-funding.md), [compliance.md](../compliance.md), [tech-stack/application-architecture.md](../tech-stack/application-architecture.md) (where adapters land in the .NET solution).

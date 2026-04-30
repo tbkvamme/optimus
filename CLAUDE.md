@@ -99,9 +99,32 @@ All going-forward design substance previously distilled from legacy artifacts ha
 
 Per the user's global instructions: always use relative paths with forward slashes (`docs/kb/application-flow.md`), never absolute Windows paths and never backslashes, in tool calls and in prose.
 
-## Tooling not yet established
+## Tech stack
 
-There is no `package.json`, `composer.json`, `pyproject.toml`, Makefile, or CI config in this repo yet. When the rewrite stack is chosen, add build / test / lint commands to this section. Until then, do not fabricate commands.
+The major tech-stack choices are now locked. Detail and rationale: [`docs/kb/tech-stack.md`](docs/kb/tech-stack.md) and the sub-topics under [`docs/kb/tech-stack/`](docs/kb/tech-stack).
+
+| Layer | Choice |
+|-------|--------|
+| Backend | .NET 8 (LTS), layered solution: `Optimus.Api` / `Optimus.Application` / `Optimus.Domain` / `Optimus.Infrastructure` + tests |
+| Frontend | React + TypeScript + Vite + Tailwind, bundled into API `wwwroot/` for production |
+| Mobile / PWA | PWA-first via vite-plugin-pwa (InjectManifest); **Bubblewrap TWA** as optional Android Play Store wrapper in MVP; **Capacitor iOS shell deferred** (iPhone users use the web PWA via Safari in MVP) |
+| Database | PostgreSQL (DigitalOcean managed), EF Core + Npgsql, migrations in repo |
+| Auth — platform users | Auth0 (admin team + contractors), JWT bearer in API |
+| Auth — borrowers | One-time HMAC-signed URL → application-scoped session cookie, in-app, no third party |
+| CI/CD | GitHub Actions: `ci` on PR/main, `cd` on main → push to DigitalOcean Container Registry → App Platform auto-deploys |
+| Hosting | Digital Ocean App Platform via DOCR, declared in `.do/app.yaml` |
+| Logging | Serilog → JSON to stdout |
+| Observability | Datadog via DO managed log forwarding (no Datadog SDK in app code) |
+
+The implementation scaffold (repo skeleton, `Dockerfile`, `.do/app.yaml`, GitHub Actions workflows, Serilog/Auth0 wiring, etc.) is queued as a separate planning track and **does not yet exist in the repo**. Until it lands, do not fabricate `dotnet`, `yarn`, or `docker` commands as if they ran here.
+
+Project principles that bear on every implementation choice:
+- **Mobile-first** — design starts at 360px width and progressively enhances. The in-home-sale handoff is the canonical use case.
+- **Monolith-first** — one deployable for MVP; lender adapters are in-process modules in `Optimus.Infrastructure`.
+- **Build first, abstract second** — don't generalize until there's a real second case (especially for lender adapters).
+- **Dual-market** — U.S. and Canada from day one, not retrofitted.
+- **Audit and security baked in** — structured logging, correlation IDs, consent capture, audit-log discipline from the first commit.
+- **Enterprise-grade = secure, auditable, reliable, accessible, well-documented** — *not* complex, ceremonial, or pre-emptively scaled.
 
 ## Knowledgebase
 
@@ -121,3 +144,9 @@ Project knowledge is documented in `docs/kb/`. Read topic files when working on 
 | MVP scope | [docs/kb/mvp-scope.md](docs/kb/mvp-scope.md) | What's in MVP, what's deferred, timeline, follow-up materials owed |
 | Compliance | [docs/kb/compliance.md](docs/kb/compliance.md) | Facilitator posture, security/auditability/retention design discipline |
 | Clean-room rules | [docs/kb/clean-room-rules.md](docs/kb/clean-room-rules.md) | IP-driven constraint on legacy artifact use |
+| Tech stack | [docs/kb/tech-stack.md](docs/kb/tech-stack.md) | Headline choices: .NET 8, React+TS, Postgres, Auth0, DO App Platform, GitHub Actions, Serilog, Datadog |
+| Application architecture | [docs/kb/tech-stack/application-architecture.md](docs/kb/tech-stack/application-architecture.md) | Layered .NET solution, EF Core, MediatR, monolith-first, frontend-in-wwwroot |
+| Infrastructure & deployment | [docs/kb/tech-stack/infrastructure-and-deployment.md](docs/kb/tech-stack/infrastructure-and-deployment.md) | Multi-stage Dockerfile, DO App Platform, GitHub Actions, environments, secrets |
+| Observability | [docs/kb/tech-stack/observability.md](docs/kb/tech-stack/observability.md) | Serilog, correlation IDs, DO log forwarding to Datadog, audit-log boundary |
+| Authentication | [docs/kb/tech-stack/authentication.md](docs/kb/tech-stack/authentication.md) | Auth0 for platform users + one-time-URL flow for borrowers, WorkOS as documented fallback |
+| Mobile and PWA | [docs/kb/tech-stack/mobile-and-pwa.md](docs/kb/tech-stack/mobile-and-pwa.md) | Mobile-first, vite-plugin-pwa (InjectManifest), Bubblewrap TWA for Android, Capacitor iOS deferred |

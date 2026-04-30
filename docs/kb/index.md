@@ -23,6 +23,14 @@ This index maps all knowledge topics maintained for the Optimus rewrite. Read th
 - [compliance.md](compliance.md) — Facilitator posture, security/audit/retention discipline
 - [clean-room-rules.md](clean-room-rules.md) — IP-driven rules on legacy artifact use
 
+### Architecture & tooling
+- [tech-stack.md](tech-stack.md) — Backend, frontend, database, hosting, CI/CD, observability — the headline choices and why
+  - [tech-stack/application-architecture.md](tech-stack/application-architecture.md) — Layered .NET solution, EF Core, monolith-first, frontend-in-wwwroot
+  - [tech-stack/infrastructure-and-deployment.md](tech-stack/infrastructure-and-deployment.md) — Docker, DO App Platform, GitHub Actions, environments, secrets
+  - [tech-stack/observability.md](tech-stack/observability.md) — Serilog, Datadog log forwarding, correlation IDs, audit-log boundary
+  - [tech-stack/authentication.md](tech-stack/authentication.md) — Auth0 for platform users + one-time-URL flow for borrowers
+  - [tech-stack/mobile-and-pwa.md](tech-stack/mobile-and-pwa.md) — Mobile-first design, PWA via vite-plugin-pwa, Bubblewrap TWA for Android, Capacitor iOS deferred
+
 ## Sources
 
 Most current content is distilled from kickoff materials and from extracted summaries of legacy reference artifacts. Future business-team deliverables (decision trees, lender-specific rules, status definitions, wireframes) will land under `docs/` and seed updates here.

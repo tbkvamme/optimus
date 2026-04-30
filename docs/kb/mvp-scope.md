@@ -14,7 +14,7 @@ Scope locked at the kickoff meeting. No code yet.
 - **Contractor onboarding** flow. See [contractor-onboarding.md](contractor-onboarding.md).
 - **End-to-end consumer flow** through funding (the 13 steps in [application-flow.md](application-flow.md)), including project completion and homeowner funding authorization. See [project-completion-and-funding.md](project-completion-and-funding.md).
 - **Contractor dashboard** with application status and loan progress: customer details, project address, application ID, lender, approval amount, current status, lender-event timeline, contact info, required next steps.
-- **Mobile-friendly** consumer flow — explicit UX requirement, especially for in-home sales.
+- **Mobile-first PWA**, installable on Android (pure browser PWA + optional Bubblewrap-generated TWA shell for Play Store presence). iPhone users still access the web PWA via Safari. See [tech-stack/mobile-and-pwa.md](tech-stack/mobile-and-pwa.md).
 - **Clean, modern look and feel.**
 
 ## Out of MVP
@@ -24,13 +24,14 @@ Scope locked at the kickoff meeting. No code yet.
 - Self-service lender configuration / sandbox / capability-matrix admin UI.
 - Multi-language support (kickoff lists "language preference" as a borrower-side field but doesn't scope platform-side multi-language).
 - Co-applicant flow detail beyond an optional field.
+- **Native iOS app** (Capacitor + WKWebView shell) — adds Apple Developer Program, App Store review, iOS-specific Capacitor edge cases. iPhone users still get the web PWA via Safari in MVP. See [tech-stack/mobile-and-pwa.md](tech-stack/mobile-and-pwa.md).
 
 ## Architectural posture
 
 - **Modular ("Lego") architecture**, standalone first.
 - **Lender abstraction** designed to materially reduce the current 30–60-day per-lender integration cost. See [lender-integration-model.md](lender-integration-model.md).
 - **Compliance posture:** facilitator, not lender; design for security, auditability, data retention from day one. See [compliance.md](compliance.md).
-- **Tech stack** should not actively close the door on a future One Operations integration, but designing for that integration is out of scope. Tech-stack choice is the only place this constraint shows up — no further One Operations design work is in scope.
+- **Tech stack** should not actively close the door on a future One Operations integration, but designing for that integration is out of scope. Tech-stack choice is the only place this constraint shows up — no further One Operations design work is in scope. The locked tech-stack decisions are documented in [tech-stack.md](tech-stack.md); .NET satisfies the One Operations constraint since Opus One Platform is .NET.
 
 ## Timeline
 
@@ -84,4 +85,4 @@ These will land under `docs/` as they arrive and may seed updates or new KB topi
 
 ## Cross-References
 
-See also: [application-flow.md](application-flow.md), [lender-routing.md](lender-routing.md), [lender-integration-model.md](lender-integration-model.md), [contractor-onboarding.md](contractor-onboarding.md), [project-completion-and-funding.md](project-completion-and-funding.md), [compliance.md](compliance.md), [credit-pulls.md](credit-pulls.md).
+See also: [application-flow.md](application-flow.md), [lender-routing.md](lender-routing.md), [lender-integration-model.md](lender-integration-model.md), [contractor-onboarding.md](contractor-onboarding.md), [project-completion-and-funding.md](project-completion-and-funding.md), [compliance.md](compliance.md), [credit-pulls.md](credit-pulls.md), [tech-stack.md](tech-stack.md).

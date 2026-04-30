@@ -69,4 +69,4 @@ The same pattern applies to consumer-side soft-pull and hard-pull consents — d
 
 ## Cross-References
 
-See also: [loan-documents-and-signing.md](loan-documents-and-signing.md), [credit-pulls.md](credit-pulls.md), [contractor-onboarding.md](contractor-onboarding.md), [lender-integration-model.md](lender-integration-model.md), [mvp-scope.md](mvp-scope.md).
+See also: [loan-documents-and-signing.md](loan-documents-and-signing.md), [credit-pulls.md](credit-pulls.md), [contractor-onboarding.md](contractor-onboarding.md), [lender-integration-model.md](lender-integration-model.md), [mvp-scope.md](mvp-scope.md), [tech-stack/observability.md](tech-stack/observability.md) (audit-log boundary, where compliance events live vs. application logs).
