@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #fafaf9;
+  --fg: #1c1917;
+  --muted: #57534e;
+  --border: #e7e5e4;
+  --accent: #0369a1;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* Highlight.js theme — light, neutral */
+.hljs {
+  background: #f5f5f4;
+  color: #1c1917;
+  border-radius: 6px;
+  padding: 0.85em 1em;
+  font-size: 0.875em;
+  overflow-x: auto;
+}
+.hljs-comment, .hljs-quote { color: #78716c; font-style: italic; }
+.hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-section, .hljs-link { color: #0369a1; }
+.hljs-string, .hljs-attr, .hljs-symbol, .hljs-attribute { color: #15803d; }
+.hljs-number, .hljs-built_in, .hljs-builtin-name, .hljs-type { color: #b45309; }
+.hljs-title, .hljs-name { color: #6d28d9; }
+.hljs-regexp, .hljs-template-tag, .hljs-deletion { color: #b91c1c; }

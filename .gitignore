@@ -1,0 +1,16 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Node / Next.js (kb-site has its own .gitignore as well)
+node_modules/
+.next/
+.vercel/
+*.log
+
+# Env
+.env
+.env.local
+.env.*.local
