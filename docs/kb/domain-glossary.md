@@ -17,7 +17,11 @@ Pre-implementation. Terminology and roles distilled from kickoff materials and f
 - **Homeowner / Borrower** — the customer receiving the loan. Lives in the U.S. or Canada. Owns a home and has a project they want financed.
 - **Contractor / Merchant / Seller** — the contractor (HVAC, solar, roofing, etc.) that sells the home-improvement work and originates the loan application on the homeowner's behalf, typically during an in-home sales conversation.
 - **Lender** — third-party financing partner. Multiple lenders are integrated; each runs its own application, statuses, disclosures, IDV, signing, and APIs.
-- **Platform / Admin team** — internal Optimus operators. Configure routing, manage contractor and lender records, monitor operations.
+- **Platform / Admin team** — internal Optimus operators. Configure routing, manage contractor and lender records, monitor operations. Sit *above* the tenant layer with role-gated cross-tenant access — not blanket superuser. See [ownership-and-tenancy.md](ownership-and-tenancy.md).
+
+## Platform ownership and tenancy
+
+Optimus owns the running deployment, the database, and the source-code repository. **Digital Rain Tech (DRT)** operates the platform on Optimus's behalf for a fee. Within the deployment, each contractor company is a **tenant** with isolated data; sales reps and other employees are users *within* that tenant. Borrowers are application-scoped (not tenants), and lenders are platform-level integrations (not tenants). The Optimus admin team operates above the tenant layer with role-gated cross-tenant access. For the full model, see [ownership-and-tenancy.md](ownership-and-tenancy.md).
 
 ## Application states (high-level)
 

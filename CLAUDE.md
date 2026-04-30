@@ -23,6 +23,10 @@ Optimus is **not a lender**. It is a multi-lender broker/orchestrator that conne
 - **Lender** — third-party financing partner. Multiple lenders are integrated; each has its own application, statuses, disclosures, and APIs.
 - **Platform / Admin team** — internal users who configure routing, manage contractors and lenders, and monitor operations.
 
+### Platform ownership and tenancy
+
+Optimus owns the running deployment, the database, and the source-code repository. **Digital Rain Tech (DRT)** operates the platform on Optimus's behalf for a fee. Within the deployment, each contractor company is a **tenant** with isolated data; sales reps and other employees are users *within* that tenant. Borrowers are application-scoped (not tenants). Lenders are platform-level integrations (not tenants). The Optimus admin team operates above the tenant layer with role-gated cross-tenant access — *not* blanket superuser. Multi-tenancy is baked in from Day 1: every business table gets a `tenant_id`. See [docs/kb/ownership-and-tenancy.md](docs/kb/ownership-and-tenancy.md).
+
 ### Routing model — rules-based, not a marketplace
 
 Optimus uses **automatic rules-based routing** to send each application to the most appropriate lender. The contractor does **not** pick a lender from a list. Routing inputs:
@@ -144,6 +148,7 @@ Project knowledge is documented in `docs/kb/`. Read topic files when working on 
 | MVP scope | [docs/kb/mvp-scope.md](docs/kb/mvp-scope.md) | What's in MVP, what's deferred, timeline, follow-up materials owed |
 | Compliance | [docs/kb/compliance.md](docs/kb/compliance.md) | Facilitator posture, security/auditability/retention design discipline |
 | Clean-room rules | [docs/kb/clean-room-rules.md](docs/kb/clean-room-rules.md) | IP-driven constraint on legacy artifact use |
+| Ownership and tenancy | [docs/kb/ownership-and-tenancy.md](docs/kb/ownership-and-tenancy.md) | Optimus owns deployment, DRT operates; contractors as tenants; admin team as cross-tenant operators |
 | Tech stack | [docs/kb/tech-stack.md](docs/kb/tech-stack.md) | Headline choices: .NET 8, React+TS, Postgres, Auth0, DO App Platform, GitHub Actions, Serilog, Datadog |
 | Application architecture | [docs/kb/tech-stack/application-architecture.md](docs/kb/tech-stack/application-architecture.md) | Layered .NET solution, EF Core, MediatR, monolith-first, frontend-in-wwwroot |
 | Infrastructure & deployment | [docs/kb/tech-stack/infrastructure-and-deployment.md](docs/kb/tech-stack/infrastructure-and-deployment.md) | Multi-stage Dockerfile, DO App Platform, GitHub Actions, environments, secrets |

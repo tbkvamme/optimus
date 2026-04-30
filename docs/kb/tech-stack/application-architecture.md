@@ -48,6 +48,17 @@ A common `Directory.Build.props` at `backend/` sets the target framework (`net8.
 
 This keeps controllers/endpoints thin (parse → send to MediatR → return result) and concentrates business rules in the application layer where they're easy to test.
 
+## Tenant context
+
+The platform is multi-tenant ([ownership-and-tenancy.md](../ownership-and-tenancy.md)). Tenant context is **ambient**, not parameterized:
+
+- Middleware reads the active tenant from the authenticated user's claims (Auth0 Organization for contractor users; tenant header or query for admin cross-tenant operations).
+- A request-scoped `TenantContext` service is exposed via DI; handlers and repositories receive it implicitly.
+- EF Core query filters apply the tenant scope automatically; `AppDbContext.SaveChanges` stamps `tenant_id` on new entities.
+- Cross-tenant access is the exception — gated by an explicit admin-role check and audit-logged.
+
+Concrete schema (`tenant_id` columns, query-filter wiring, migration) is deferred to the implementation plan; the principle that tenant context is ambient is locked.
+
 ## Frontend deployment model: bundled into API `wwwroot/`
 
 - The frontend (`frontend/`) is built with Vite and emits `dist/`.
@@ -95,4 +106,4 @@ This keeps controllers/endpoints thin (parse → send to MediatR → return resu
 
 ## Cross-References
 
-See also: [tech-stack.md](../tech-stack.md), [adapter-architecture.md](../lender-integration-model/adapter-architecture.md), [infrastructure-and-deployment.md](infrastructure-and-deployment.md), [observability.md](observability.md), [compliance.md](../compliance.md).
+See also: [tech-stack.md](../tech-stack.md), [adapter-architecture.md](../lender-integration-model/adapter-architecture.md), [infrastructure-and-deployment.md](infrastructure-and-deployment.md), [observability.md](observability.md), [compliance.md](../compliance.md), [ownership-and-tenancy.md](../ownership-and-tenancy.md).

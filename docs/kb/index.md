@@ -20,6 +20,7 @@ This index maps all knowledge topics maintained for the Optimus rewrite. Read th
 
 ### Scope, posture, references
 - [mvp-scope.md](mvp-scope.md) — MVP features, deferred items, timeline
+- [ownership-and-tenancy.md](ownership-and-tenancy.md) — Optimus owns deployment, DRT operates; contractors as tenants, admin team as cross-tenant operators
 - [compliance.md](compliance.md) — Facilitator posture, security/audit/retention discipline
 - [clean-room-rules.md](clean-room-rules.md) — IP-driven rules on legacy artifact use
 

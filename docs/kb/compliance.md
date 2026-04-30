@@ -27,6 +27,7 @@ Optimus is **not a lender**. It facilitates the connection between contractors, 
 - **Auditability** — who did what when, especially around routing decisions, application data changes, and status updates.
 - **Data retention** — how long Optimus holds borrower applications, pulled credit data (if Optimus eventually owns the soft pull), uploaded documents, and event logs.
 - **Future compliance requirements** — the platform should be in a position to onboard new compliance regimes (e.g., CFPB rule changes, state-level lending laws) without architectural rewrites.
+- **Tenant data isolation** — one contractor must not see another contractor's borrower data. This is both a security concern (access control enforced through tenant-scoped queries) and an audit concern (audit-log rows are tenant-tagged, enabling tenant-scoped exports for regulator requests or contractor disputes). See [ownership-and-tenancy.md](ownership-and-tenancy.md).
 
 ## Key Decisions & Rationale
 
@@ -69,4 +70,4 @@ The same pattern applies to consumer-side soft-pull and hard-pull consents — d
 
 ## Cross-References
 
-See also: [loan-documents-and-signing.md](loan-documents-and-signing.md), [credit-pulls.md](credit-pulls.md), [contractor-onboarding.md](contractor-onboarding.md), [lender-integration-model.md](lender-integration-model.md), [mvp-scope.md](mvp-scope.md), [tech-stack/observability.md](tech-stack/observability.md) (audit-log boundary, where compliance events live vs. application logs).
+See also: [loan-documents-and-signing.md](loan-documents-and-signing.md), [credit-pulls.md](credit-pulls.md), [contractor-onboarding.md](contractor-onboarding.md), [lender-integration-model.md](lender-integration-model.md), [mvp-scope.md](mvp-scope.md), [tech-stack/observability.md](tech-stack/observability.md) (audit-log boundary, where compliance events live vs. application logs), [ownership-and-tenancy.md](ownership-and-tenancy.md) (tenant data isolation).

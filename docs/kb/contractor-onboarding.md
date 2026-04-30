@@ -96,6 +96,8 @@ Useful both for lender underwriting (which equipment ecosystems the merchant ope
 
 A contractor is **not activated in Optimus** until onboarding **and lender approval** are both complete. The contractor cannot originate consumer loans before this gate clears.
 
+Activation is also **tenant creation**: passing the gate is when the contractor's tenant becomes operational in the platform — sales-rep accounts can be invited, application URLs can be issued, audit-log rows start accruing under the new `tenant_id`. Pre-activation, the contractor record exists but the tenant boundary is not yet "live." See [ownership-and-tenancy.md](ownership-and-tenancy.md).
+
 ## Key Decisions & Rationale
 
 ### Onboarding is separate from the consumer flow

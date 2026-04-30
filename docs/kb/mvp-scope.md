@@ -32,6 +32,7 @@ Scope locked at the kickoff meeting. No code yet.
 - **Lender abstraction** designed to materially reduce the current 30–60-day per-lender integration cost. See [lender-integration-model.md](lender-integration-model.md).
 - **Compliance posture:** facilitator, not lender; design for security, auditability, data retention from day one. See [compliance.md](compliance.md).
 - **Tech stack** should not actively close the door on a future One Operations integration, but designing for that integration is out of scope. Tech-stack choice is the only place this constraint shows up — no further One Operations design work is in scope. The locked tech-stack decisions are documented in [tech-stack.md](tech-stack.md); .NET satisfies the One Operations constraint since Opus One Platform is .NET.
+- **Multi-tenant from Day 1.** Every business table gets a `tenant_id`; tenants are contractor companies. Optimus owns the deployment; Digital Rain Tech (DRT) operates it. See [ownership-and-tenancy.md](ownership-and-tenancy.md).
 
 ## Timeline
 
@@ -71,6 +72,10 @@ These will land under `docs/` as they arrive and may seed updates or new KB topi
 
 **Why:** That's where contractor revenue lands. See [project-completion-and-funding.md](project-completion-and-funding.md).
 
+### Multi-tenant from Day 1, not retrofitted
+
+**Why:** Adding tenancy to an existing schema is one of the most expensive refactors a SaaS-style platform can undertake. Even if MVP launches with only a handful of contractor tenants, the cost of `tenant_id` from the start is trivial compared to the cost of adding it later. See [ownership-and-tenancy.md](ownership-and-tenancy.md) for the full ownership and tenancy model.
+
 ### Mobile-friendly is non-negotiable, not a nice-to-have
 
 **Why:** The consumer flow is used during in-home sales. The contractor often hands their phone to the homeowner or sends a link the homeowner opens on their phone. Desktop-only would break the primary use case.
@@ -85,4 +90,4 @@ These will land under `docs/` as they arrive and may seed updates or new KB topi
 
 ## Cross-References
 
-See also: [application-flow.md](application-flow.md), [lender-routing.md](lender-routing.md), [lender-integration-model.md](lender-integration-model.md), [contractor-onboarding.md](contractor-onboarding.md), [project-completion-and-funding.md](project-completion-and-funding.md), [compliance.md](compliance.md), [credit-pulls.md](credit-pulls.md), [tech-stack.md](tech-stack.md).
+See also: [application-flow.md](application-flow.md), [lender-routing.md](lender-routing.md), [lender-integration-model.md](lender-integration-model.md), [contractor-onboarding.md](contractor-onboarding.md), [project-completion-and-funding.md](project-completion-and-funding.md), [compliance.md](compliance.md), [credit-pulls.md](credit-pulls.md), [tech-stack.md](tech-stack.md), [ownership-and-tenancy.md](ownership-and-tenancy.md).

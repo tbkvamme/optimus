@@ -78,4 +78,4 @@ Each handoff implies:
 
 ## Cross-References
 
-See also: [application-flow.md](application-flow.md), [project-completion-and-funding.md](project-completion-and-funding.md), [credit-pulls.md](credit-pulls.md), [contractor-onboarding.md](contractor-onboarding.md), [mvp-scope.md](mvp-scope.md), [tech-stack/authentication.md](tech-stack/authentication.md) (the realized auth model — Auth0 for partners, one-time URLs for borrowers), [tech-stack/mobile-and-pwa.md](tech-stack/mobile-and-pwa.md) (mobile-first as the default surface for both experiences).
+See also: [application-flow.md](application-flow.md), [project-completion-and-funding.md](project-completion-and-funding.md), [credit-pulls.md](credit-pulls.md), [contractor-onboarding.md](contractor-onboarding.md), [mvp-scope.md](mvp-scope.md), [tech-stack/authentication.md](tech-stack/authentication.md) (the realized auth model — Auth0 for partners, one-time URLs for borrowers), [tech-stack/mobile-and-pwa.md](tech-stack/mobile-and-pwa.md) (mobile-first as the default surface for both experiences), [ownership-and-tenancy.md](ownership-and-tenancy.md) (the partner side of the experience is bound to a contractor tenant).

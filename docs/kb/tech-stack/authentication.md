@@ -28,6 +28,17 @@ The split exists because borrowers have a fundamentally different relationship t
 
 Auth0's free tier (currently 25,000 monthly active users) covers admin team + contractors with very wide headroom. The borrower split keeps the largest user category (homeowners) out of the MAU count entirely.
 
+### Tenancy is realized via Auth0 Organizations
+
+The platform's multi-tenancy model ([ownership-and-tenancy.md](../ownership-and-tenancy.md)) maps to Auth0's first-class **Organizations** primitive:
+
+- Each contractor tenant is one Auth0 Organization.
+- Contractor users (the contractor's owners and sales reps) are members of that Organization.
+- The active Organization is encoded in the JWT and resolved by the API into the request's `TenantContext` (see [application-architecture.md](application-architecture.md)).
+- The Optimus admin team has cross-Organization access via dedicated roles, *not* via Organization membership. Admin role claims drive policy-based authorization for the cross-tenant operations they're allowed to perform.
+
+Specific Auth0 Organization setup (creation flow, member invitation, role assignment, JWT claim shape) is deferred to the implementation plan.
+
 ## Borrowers: one-time signed URL → application-scoped session
 
 The flow:
@@ -96,4 +107,4 @@ This is captured here so the option is remembered, not because we're designing f
 
 ## Cross-References
 
-See also: [tech-stack.md](../tech-stack.md), [partner-and-borrower-experience.md](../partner-and-borrower-experience.md), [application-flow.md](../application-flow.md), [compliance.md](../compliance.md), [contractor-onboarding.md](../contractor-onboarding.md).
+See also: [tech-stack.md](../tech-stack.md), [partner-and-borrower-experience.md](../partner-and-borrower-experience.md), [application-flow.md](../application-flow.md), [compliance.md](../compliance.md), [contractor-onboarding.md](../contractor-onboarding.md), [ownership-and-tenancy.md](../ownership-and-tenancy.md).
