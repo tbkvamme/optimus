@@ -4,33 +4,38 @@ This index maps all knowledge topics maintained for the Optimus rewrite. Read th
 
 ## Topics
 
-### Product & flow
+### Foundations
 - [domain-glossary.md](domain-glossary.md) — Actor roles and key terminology
+- [ownership-and-tenancy.md](ownership-and-tenancy.md) — Optimus owns deployment, DRT operates; contractors as tenants, admin team as cross-tenant operators
+
+### Product flows
 - [application-flow.md](application-flow.md) — End-to-end consumer flow, 13 steps; two origination modes; two-part application split; loan checklist as a state
 - [partner-and-borrower-experience.md](partner-and-borrower-experience.md) — Two-sided experience model, action ownership, handoff mechanics
+- [credit-pulls.md](credit-pulls.md) — Soft pull at prequal, hard pull at full app
 - [project-completion-and-funding.md](project-completion-and-funding.md) — Two-gate funding (partner attestation + borrower authorization), multi-channel authorization
 - [contractor-onboarding.md](contractor-onboarding.md) — Onboarding data model, beneficial owners, activation gate
 
-### Routing & lender integration
+### Lenders
 - [lender-routing.md](lender-routing.md) — Rules-based routing inputs and tier logic
 - [lender-integration-model.md](lender-integration-model.md) — Lender abstraction and per-lender variation
   - [lender-integration-model/adapter-architecture.md](lender-integration-model/adapter-architecture.md) — Adapter pattern, canonical model, single webhook ingestion, in-process deployment
-- [credit-pulls.md](credit-pulls.md) — Soft pull at prequal, hard pull at full app
 - [loan-documents-and-signing.md](loan-documents-and-signing.md) — Lender-owned signing flow
 
-### Scope, posture, references
+### Tech stack
+- [tech-stack.md](tech-stack.md) — Backend, frontend, database, hosting, CI/CD, observability — the headline choices and why
+  - [tech-stack/application-architecture.md](tech-stack/application-architecture.md) — Layered .NET solution, EF Core, monolith-first, frontend-in-wwwroot
+  - [tech-stack/mobile-and-pwa.md](tech-stack/mobile-and-pwa.md) — Mobile-first design, PWA via vite-plugin-pwa, Bubblewrap TWA for Android, Capacitor iOS deferred
+  - [tech-stack/authentication.md](tech-stack/authentication.md) — Auth0 for platform users + one-time-URL flow for borrowers
+  - [tech-stack/infrastructure-and-deployment.md](tech-stack/infrastructure-and-deployment.md) — Docker, DO App Platform, GitHub Actions, environments, secrets
+  - [tech-stack/observability.md](tech-stack/observability.md) — Serilog, Datadog log forwarding, correlation IDs, audit-log boundary
+
+### Scope & posture
 - [mvp-scope.md](mvp-scope.md) — MVP features, deferred items, timeline
-- [ownership-and-tenancy.md](ownership-and-tenancy.md) — Optimus owns deployment, DRT operates; contractors as tenants, admin team as cross-tenant operators
 - [compliance.md](compliance.md) — Facilitator posture, security/audit/retention discipline
 - [clean-room-rules.md](clean-room-rules.md) — IP-driven rules on legacy artifact use
 
-### Architecture & tooling
-- [tech-stack.md](tech-stack.md) — Backend, frontend, database, hosting, CI/CD, observability — the headline choices and why
-  - [tech-stack/application-architecture.md](tech-stack/application-architecture.md) — Layered .NET solution, EF Core, monolith-first, frontend-in-wwwroot
-  - [tech-stack/infrastructure-and-deployment.md](tech-stack/infrastructure-and-deployment.md) — Docker, DO App Platform, GitHub Actions, environments, secrets
-  - [tech-stack/observability.md](tech-stack/observability.md) — Serilog, Datadog log forwarding, correlation IDs, audit-log boundary
-  - [tech-stack/authentication.md](tech-stack/authentication.md) — Auth0 for platform users + one-time-URL flow for borrowers
-  - [tech-stack/mobile-and-pwa.md](tech-stack/mobile-and-pwa.md) — Mobile-first design, PWA via vite-plugin-pwa, Bubblewrap TWA for Android, Capacitor iOS deferred
+### Open questions
+- [open-questions.md](open-questions.md) — Pending items where the team has a working assumption or a gap awaiting business-team input
 
 ## Sources
 

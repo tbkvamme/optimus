@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { buildNavTree, type KbNode } from '@/lib/kb';
+import { buildNavSections, type KbNode } from '@/lib/kb';
 
 function renderNode(node: KbNode, depth: number) {
   const href = `/kb/${node.slug}`;
   return (
-    <li key={node.slug} className={depth === 0 ? 'mt-1' : 'mt-0.5 ml-3'}>
+    <li key={node.slug} className={depth === 0 ? 'mt-0.5' : 'mt-0.5 ml-3'}>
       <Link
         href={href}
         className="block py-1 px-2 rounded text-sm text-stone-700 hover:bg-stone-200 hover:text-stone-900"
@@ -21,7 +21,7 @@ function renderNode(node: KbNode, depth: number) {
 }
 
 export function Sidebar() {
-  const tree = buildNavTree();
+  const sections = buildNavSections();
 
   return (
     <nav className="text-sm">
@@ -31,7 +31,16 @@ export function Sidebar() {
       >
         Knowledgebase
       </Link>
-      <ul className="mt-2">{tree.map((node) => renderNode(node, 0))}</ul>
+      <div className="mt-2">
+        {sections.map((section) => (
+          <div key={section.title} className="mt-4 first:mt-2">
+            <div className="px-2 pb-1 text-[11px] uppercase tracking-wider text-stone-500 font-semibold">
+              {section.title}
+            </div>
+            <ul>{section.nodes.map((node) => renderNode(node, 0))}</ul>
+          </div>
+        ))}
+      </div>
       <div className="mt-6 pt-4 border-t border-stone-200">
         <Link
           href="/prototypes"

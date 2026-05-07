@@ -15,6 +15,7 @@ Scope locked at the kickoff meeting. No code yet.
 - **End-to-end consumer flow** through funding (the 13 steps in [application-flow.md](application-flow.md)), including project completion and homeowner funding authorization. See [project-completion-and-funding.md](project-completion-and-funding.md).
 - **Contractor dashboard** with application status and loan progress: customer details, project address, application ID, lender, approval amount, current status, lender-event timeline, contact info, required next steps.
 - **Mobile-first PWA**, installable on Android (pure browser PWA + optional Bubblewrap-generated TWA shell for Play Store presence). iPhone users still access the web PWA via Safari. See [tech-stack/mobile-and-pwa.md](tech-stack/mobile-and-pwa.md).
+- **Multi-language consumer flow.** i18n is wired in from the first commit; the MVP baseline language set is English (US/CA) plus Canadian French given the dual-market constraint. Specific language list confirmable with the business team, but the architecture supports multi-language regardless.
 - **Clean, modern look and feel.**
 
 ## Out of MVP
@@ -22,7 +23,6 @@ Scope locked at the kickoff meeting. No code yet.
 - Multi-prime-per-product-category routing.
 - Optimus-owned soft credit pull. See [credit-pulls.md](credit-pulls.md).
 - Self-service lender configuration / sandbox / capability-matrix admin UI.
-- Multi-language support (kickoff lists "language preference" as a borrower-side field but doesn't scope platform-side multi-language).
 - Co-applicant flow detail beyond an optional field.
 - **Native iOS app** (Capacitor + WKWebView shell) — adds Apple Developer Program, App Store review, iOS-specific Capacitor edge cases. iPhone users still get the web PWA via Safari in MVP. See [tech-stack/mobile-and-pwa.md](tech-stack/mobile-and-pwa.md).
 
@@ -36,8 +36,8 @@ Scope locked at the kickoff meeting. No code yet.
 
 ## Timeline
 
-- **MVP** by end of summer 2026, ideally ready to begin lender API integration work by then. *(Internal tension: the MVP scope list above includes "single prime lender + defined fallback," which seems to require lender integration to be done by MVP — not starting at MVP. Queued for clarification with the business team — see [next-meeting-prep.md](../references/meetings/next-meeting-prep.md).)*
-- **Production** in 2027. The new platform runs in **parallel** with the existing legacy Optimus: new loan originations cut over to the new platform, while legacy continues to service its existing loans until they wind down naturally. **Working assumption:** no data is imported from the legacy system. This needs confirmation with the business team — see [next-meeting-prep.md](../references/meetings/next-meeting-prep.md) and the Key Decision below.
+- **MVP** by end of summer 2026, ideally ready to begin lender API integration work by then. *(Internal tension: the MVP scope list above includes "single prime lender + defined fallback," which seems to require lender integration to be done by MVP — not starting at MVP. Queued for clarification with the business team — see [open-questions.md](open-questions.md).)*
+- **Production** in 2027. The new platform runs in **parallel** with the existing legacy Optimus: new loan originations cut over to the new platform, while legacy continues to service its existing loans until they wind down naturally. **Working assumption:** no data is imported from the legacy system. This needs confirmation with the business team — see [open-questions.md](open-questions.md) and the Key Decision below.
 
 ## Follow-up materials owed by the business team
 
@@ -80,9 +80,15 @@ These will land under `docs/` as they arrive and may seed updates or new KB topi
 
 **Why:** The consumer flow is used during in-home sales. The contractor often hands their phone to the homeowner or sends a link the homeowner opens on their phone. Desktop-only would break the primary use case.
 
+### Multi-language support is in MVP, not deferred
+
+**Why:** Optimus is a dual-market platform from Day 1, and Quebec essentially mandates Canadian French for consumer-facing applications. Adding i18n to a frontend after the fact is one of the most expensive retrofits possible — every screen has to be revisited and every hardcoded string extracted. Wiring i18n in from the first React component is cheap; deferring it is not. The baseline language set is small (English plus Canadian French) and additional languages later become a translation-files concern, not an architecture change.
+
+**How to apply:** No hardcoded user-facing strings, ever. All consumer-facing UI text goes through the i18n layer from the first commit. Translation files start with English (US/CA) and Canadian French as the MVP baseline.
+
 ### No data migration from legacy *(working assumption — pending business team confirmation)*
 
-**Status:** working assumption, queued for the next meeting with the business team. See [next-meeting-prep.md](../references/meetings/next-meeting-prep.md) for what we need to confirm.
+**Status:** working assumption, queued for the next meeting with the business team. See [open-questions.md](open-questions.md) for what we need to confirm.
 
 **Why we're assuming this:** The new platform is a clean-room rewrite (see [clean-room-rules.md](clean-room-rules.md)), and that discipline extends to data, not just code. Pulling existing loan / contractor / borrower records out of the legacy system would re-couple Optimus to legacy schemas, lender-specific quirks, and the legacy partner's tech — which is what we're trying to break free from. The cleaner cutover: legacy continues servicing its existing loans until they wind down naturally; the new platform handles 100% of new originations from cutover onward.
 

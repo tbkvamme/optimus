@@ -11,6 +11,11 @@ export type KbNode = {
   children: KbNode[];
 };
 
+export type KbSection = {
+  title: string;
+  nodes: KbNode[];
+};
+
 const TITLE_RE = /^#\s+(.+)$/m;
 
 function readTitle(filePath: string, fallback: string): string {
@@ -115,4 +120,83 @@ export function getKbIndexTitle(): string {
   const indexPath = join(KB_ROOT, 'index.md');
   if (!existsSync(indexPath)) return 'Knowledgebase';
   return readTitle(indexPath, 'Knowledgebase');
+}
+
+type IndexEntry = { slug: string; section: string; depth: 0 | 1 };
+
+function parseIndexEntries(): IndexEntry[] {
+  const indexPath = join(KB_ROOT, 'index.md');
+  if (!existsSync(indexPath)) return [];
+  const content = readFileSync(indexPath, 'utf8');
+  const lines = content.split('\n');
+
+  const entries: IndexEntry[] = [];
+  let currentSection = '';
+
+  for (const line of lines) {
+    const sectionMatch = line.match(/^###\s+(.+?)\s*$/);
+    if (sectionMatch) {
+      currentSection = sectionMatch[1];
+      continue;
+    }
+    const bulletMatch = line.match(/^(\s*)-\s+\[[^\]]+\]\(([^)]+)\)/);
+    if (bulletMatch && currentSection) {
+      const indent = bulletMatch[1].length;
+      const linkTarget = bulletMatch[2];
+      if (!linkTarget.endsWith('.md')) continue;
+      const slug = linkTarget.replace(/\.md$/, '');
+      const depth = indent >= 2 ? 1 : 0;
+      entries.push({ slug, section: currentSection, depth });
+    }
+  }
+  return entries;
+}
+
+export function buildNavSections(): KbSection[] {
+  const tree = buildNavTree();
+  const nodesBySlug = new Map<string, KbNode>();
+  for (const node of tree) {
+    nodesBySlug.set(node.slug, node);
+    for (const child of node.children) {
+      nodesBySlug.set(child.slug, child);
+    }
+  }
+
+  const entries = parseIndexEntries();
+  const sectionsMap = new Map<string, KbNode[]>();
+  const sectionOrder: string[] = [];
+  const referenced = new Set<string>();
+
+  for (const entry of entries) {
+    const node = nodesBySlug.get(entry.slug);
+    if (!node) continue;
+    referenced.add(entry.slug);
+
+    if (entry.depth === 0) {
+      if (!sectionsMap.has(entry.section)) {
+        sectionsMap.set(entry.section, []);
+        sectionOrder.push(entry.section);
+      }
+      sectionsMap.get(entry.section)!.push({ ...node, children: [] });
+    } else {
+      const list = sectionsMap.get(entry.section);
+      if (!list || list.length === 0) continue;
+      list[list.length - 1].children.push({ ...node, children: [] });
+    }
+  }
+
+  const sections: KbSection[] = sectionOrder.map((title) => ({
+    title,
+    nodes: sectionsMap.get(title)!,
+  }));
+
+  const orphanNodes: KbNode[] = [];
+  for (const node of tree) {
+    if (!referenced.has(node.slug)) orphanNodes.push(node);
+  }
+  if (orphanNodes.length > 0) {
+    sections.push({ title: 'Other', nodes: orphanNodes });
+  }
+
+  return sections;
 }

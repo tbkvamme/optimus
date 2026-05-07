@@ -76,6 +76,7 @@ The rewrite **starts at zero lenders** and adds them one at a time as deliberate
 - **End-to-end consumer flow** through funding (the 13 steps above), including project completion and homeowner funding authorization.
 - **Contractor dashboard** with application status and loan progress (customer details, project address, application ID, lender, approval amount, current status, lender-event timeline, contact info, required next steps).
 - **Mobile-friendly** consumer flow — explicit UX requirement, especially for in-home sales.
+- **Multi-language** consumer flow — i18n from Day 1; English (US/CA) plus Canadian French as the MVP baseline given the dual-market constraint.
 - **Clean, modern look and feel.**
 
 ### Architectural posture
@@ -87,7 +88,7 @@ The rewrite **starts at zero lenders** and adds them one at a time as deliberate
 ### Timeline
 
 - **MVP** by end of summer 2026, ideally ready to begin lender API integration work by then.
-- **Production** in 2027. The new platform runs in **parallel** with the existing Optimus: new loan originations cut over to the new platform. The current **working assumption** is that no data is imported from the legacy system — legacy continues to service its existing loans until they wind down naturally. This stance is pending business-team confirmation; see `docs/references/meetings/next-meeting-prep.md`.
+- **Production** in 2027. The new platform runs in **parallel** with the existing Optimus: new loan originations cut over to the new platform. The current **working assumption** is that no data is imported from the legacy system — legacy continues to service its existing loans until they wind down naturally. This stance is pending business-team confirmation; see [`docs/kb/open-questions.md`](docs/kb/open-questions.md).
 
 ## Where canonical knowledge lives
 
@@ -127,6 +128,7 @@ Project principles that bear on every implementation choice:
 - **Monolith-first** — one deployable for MVP; lender adapters are in-process modules in `Optimus.Infrastructure`.
 - **Build first, abstract second** — don't generalize until there's a real second case (especially for lender adapters).
 - **Dual-market** — U.S. and Canada from day one, not retrofitted.
+- **Multi-language** — i18n from the first commit. No hardcoded user-facing strings. English (US/CA) plus Canadian French as the MVP baseline.
 - **Audit and security baked in** — structured logging, correlation IDs, consent capture, audit-log discipline from the first commit.
 - **Enterprise-grade = secure, auditable, reliable, accessible, well-documented** — *not* complex, ceremonial, or pre-emptively scaled.
 
@@ -134,24 +136,54 @@ Project principles that bear on every implementation choice:
 
 Project knowledge is documented in `docs/kb/`. Read topic files when working on related systems.
 
+Topics are grouped to match the KB sidebar.
+
+**Foundations**
+
 | Topic | File | Summary |
 |-------|------|---------|
 | Domain glossary | [docs/kb/domain-glossary.md](docs/kb/domain-glossary.md) | Actor roles, prequal vs full app, soft/hard pull, prime/near-prime/subprime |
+| Ownership and tenancy | [docs/kb/ownership-and-tenancy.md](docs/kb/ownership-and-tenancy.md) | Optimus owns deployment, DRT operates; contractors as tenants; admin team as cross-tenant operators |
+
+**Product flows**
+
+| Topic | File | Summary |
+|-------|------|---------|
 | Application flow | [docs/kb/application-flow.md](docs/kb/application-flow.md) | 13-step flow, two origination modes, two-part application split, loan checklist as a state |
 | Partner & borrower experience | [docs/kb/partner-and-borrower-experience.md](docs/kb/partner-and-borrower-experience.md) | Two-sided experience, action ownership rules, handoff mechanics |
-| Lender routing | [docs/kb/lender-routing.md](docs/kb/lender-routing.md) | Rules-based routing, prime-first prequal, MVP single-prime + fallback, soft-pull bypass for some products |
-| Lender integration model | [docs/kb/lender-integration-model.md](docs/kb/lender-integration-model.md) | Per-lender variation, approval conditions, threshold-gated requirements, promotional programs |
 | Credit pulls | [docs/kb/credit-pulls.md](docs/kb/credit-pulls.md) | Soft/hard pull triggers mapped to application part 1 / part 2; consent capture per pull |
-| Loan documents and signing | [docs/kb/loan-documents-and-signing.md](docs/kb/loan-documents-and-signing.md) | Lender-owned signing, IDV/compliance rationale for keeping it out |
 | Project completion and funding | [docs/kb/project-completion-and-funding.md](docs/kb/project-completion-and-funding.md) | Two-gate funding (partner attestation + borrower authorization), multi-channel authorization |
 | Contractor onboarding | [docs/kb/contractor-onboarding.md](docs/kb/contractor-onboarding.md) | Onboarding data model, beneficial owners, activation gate |
+
+**Lenders**
+
+| Topic | File | Summary |
+|-------|------|---------|
+| Lender routing | [docs/kb/lender-routing.md](docs/kb/lender-routing.md) | Rules-based routing, prime-first prequal, MVP single-prime + fallback, soft-pull bypass for some products |
+| Lender integration model | [docs/kb/lender-integration-model.md](docs/kb/lender-integration-model.md) | Per-lender variation, approval conditions, threshold-gated requirements, promotional programs |
+| Loan documents and signing | [docs/kb/loan-documents-and-signing.md](docs/kb/loan-documents-and-signing.md) | Lender-owned signing, IDV/compliance rationale for keeping it out |
+
+**Tech stack**
+
+| Topic | File | Summary |
+|-------|------|---------|
+| Tech stack | [docs/kb/tech-stack.md](docs/kb/tech-stack.md) | Headline choices: .NET 8, React+TS, Postgres, Auth0, DO App Platform, GitHub Actions, Serilog, Datadog |
+| Application architecture | [docs/kb/tech-stack/application-architecture.md](docs/kb/tech-stack/application-architecture.md) | Layered .NET solution, EF Core, MediatR, monolith-first, frontend-in-wwwroot |
+| Mobile and PWA | [docs/kb/tech-stack/mobile-and-pwa.md](docs/kb/tech-stack/mobile-and-pwa.md) | Mobile-first, vite-plugin-pwa (InjectManifest), Bubblewrap TWA for Android, Capacitor iOS deferred |
+| Authentication | [docs/kb/tech-stack/authentication.md](docs/kb/tech-stack/authentication.md) | Auth0 for platform users + one-time-URL flow for borrowers, WorkOS as documented fallback |
+| Infrastructure & deployment | [docs/kb/tech-stack/infrastructure-and-deployment.md](docs/kb/tech-stack/infrastructure-and-deployment.md) | Multi-stage Dockerfile, DO App Platform, GitHub Actions, environments, secrets |
+| Observability | [docs/kb/tech-stack/observability.md](docs/kb/tech-stack/observability.md) | Serilog, correlation IDs, DO log forwarding to Datadog, audit-log boundary |
+
+**Scope & posture**
+
+| Topic | File | Summary |
+|-------|------|---------|
 | MVP scope | [docs/kb/mvp-scope.md](docs/kb/mvp-scope.md) | What's in MVP, what's deferred, timeline, follow-up materials owed |
 | Compliance | [docs/kb/compliance.md](docs/kb/compliance.md) | Facilitator posture, security/auditability/retention design discipline |
 | Clean-room rules | [docs/kb/clean-room-rules.md](docs/kb/clean-room-rules.md) | IP-driven constraint on legacy artifact use |
-| Ownership and tenancy | [docs/kb/ownership-and-tenancy.md](docs/kb/ownership-and-tenancy.md) | Optimus owns deployment, DRT operates; contractors as tenants; admin team as cross-tenant operators |
-| Tech stack | [docs/kb/tech-stack.md](docs/kb/tech-stack.md) | Headline choices: .NET 8, React+TS, Postgres, Auth0, DO App Platform, GitHub Actions, Serilog, Datadog |
-| Application architecture | [docs/kb/tech-stack/application-architecture.md](docs/kb/tech-stack/application-architecture.md) | Layered .NET solution, EF Core, MediatR, monolith-first, frontend-in-wwwroot |
-| Infrastructure & deployment | [docs/kb/tech-stack/infrastructure-and-deployment.md](docs/kb/tech-stack/infrastructure-and-deployment.md) | Multi-stage Dockerfile, DO App Platform, GitHub Actions, environments, secrets |
-| Observability | [docs/kb/tech-stack/observability.md](docs/kb/tech-stack/observability.md) | Serilog, correlation IDs, DO log forwarding to Datadog, audit-log boundary |
-| Authentication | [docs/kb/tech-stack/authentication.md](docs/kb/tech-stack/authentication.md) | Auth0 for platform users + one-time-URL flow for borrowers, WorkOS as documented fallback |
-| Mobile and PWA | [docs/kb/tech-stack/mobile-and-pwa.md](docs/kb/tech-stack/mobile-and-pwa.md) | Mobile-first, vite-plugin-pwa (InjectManifest), Bubblewrap TWA for Android, Capacitor iOS deferred |
+
+**Open questions**
+
+| Topic | File | Summary |
+|-------|------|---------|
+| Open questions | [docs/kb/open-questions.md](docs/kb/open-questions.md) | Pending items with working assumptions or gaps awaiting business-team input |

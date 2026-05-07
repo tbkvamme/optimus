@@ -92,7 +92,6 @@ The backend must model the checklist as a first-class state with discrete sub-st
 
 - Mid-flow drop-off recovery (saved applications, resume links).
 - Co-applicant flow details — kickoff lists co-applicant as optional in step 7 but doesn't define the co-borrower flow.
-- Multi-language support — kickoff mentions "language preference" in step 7; the platform side of language handling is TBD.
 
 ## Cross-References
 
